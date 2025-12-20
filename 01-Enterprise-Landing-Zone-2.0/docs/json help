@@ -1,0 +1,46 @@
+### 1. How to Understand and Write IAM JSON Policies for the Future
+
+Real cloud architects **never memorize everything** – they use the internet and AWS docs 90% of the time. Here's the exact strategy (how I think when writing policies):
+
+| Step | How real architects do it | Tools / Resources I use (you can too) | Example for your GitHubActionsRole policy |
+|------|---------------------------|---------------------------------------|-------------------------------------------|
+| 1    | Start with AWS official examples | AWS IAM Policy Reference (docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements.html) | Copy the "AssumeRoleWithWebIdentity" example for OIDC |
+| 2    | Use Visual Editor first, then switch to JSON | IAM Console → Create policy → Visual Editor → Generate policy → Edit JSON | Visual Editor lets you select "Federated" principal → it generates the JSON for you |
+| 3    | Add conditions for security | AWS Example Policies (docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_examples.html) – search "OIDC" | Add "StringLike" for repo:AbhiiBansal/aws-solution-architect:* to limit to your repo |
+| 4    | Validate before saving | IAM Policy Simulator (console.aws.amazon.com/iam/home#/policies) – test the policy | Simulate the role with your GitHub repo → see if it can call Account Factory |
+| 5    | Copy from internet if stuck | Google "AWS IAM policy for GitHub OIDC" – always use official AWS examples | AWS's own OIDC tutorial (docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html) has the exact trust policy we used |
+
+**Real-world mindset:**  
+- **Play smart:** 70% copy from AWS examples, 20% use Visual Editor to generate, 10% write from scratch.  
+- **Internet is your best friend:** Every 100 LPA+ architect has AWS docs bookmarked – no one remembers 1000+ actions.  
+- **Test everything:** Always use Policy Simulator before deploying.
+
+For future policies, start with AWS's "Example IAM identity-based policies" page – it's 90% of what you need.
+
+### 2. Your GitHub Username and Repositories
+
+To update the JSON policy with your exact repo:  
+In the IAM role trust policy, change this line:  
+`"token.actions.githubusercontent.com:sub": "repo:AbhiiBansal/aws-solution-architect:*"`
+
+Save the role (IAM → Roles → GitHubActionsRole → Trust relationships → Edit trust policy → paste updated JSON → Update policy).
+
+
+
+**How you will know exactly what JSON to write – the 100 LPA+ architect way (no guessing, ever)**
+
+| Step | What real architects do (you will do this too) | Where to get the exact JSON every time |
+|------|------------------------------------------------|----------------------------------------|
+| 1    | Open AWS official OIDC + GitHub example | https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html#oidc-provider-github |
+| 2    | Copy the **exact trust policy** from the official example | It’s literally the same JSON I gave you – AWS wrote it |
+| 3    | Change only 2 lines: your account ID + your repo name | Everything else stays identical |
+| 4    | Bookmark this page forever | You will use it in every job for the next 10 years |
+
+**Your permanent cheat sheet (bookmark this URL):**
+→ **https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html#oidc-provider-github**
+
+Every single 100 LPA+ architect has this page bookmarked.  
+They copy-paste → change account ID + repo → done.
+
+**Rule you just learned (say this in interviews):**
+“I never write OIDC trust policies from memory – I copy the official AWS GitHub example and only change the account ID and repo name – that’s what every Principal does.”

@@ -1,0 +1,50 @@
+<mxfile host="65bd71144e">
+    <diagram id="fisuG_a2RuyCMLXi0DLw" name="AbhinavLZ – Enterprise Landing Zone 2.0">
+        <mxGraphModel dx="1244" dy="1655" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="&lt;h1&gt;AbhinavLZ – Enterprise Landing Zone 2.0&lt;/h1&gt;&lt;br&gt;&lt;i&gt;Zero-Trust • Self-Service • OIDC • &lt;8 min Account Vending&lt;/i&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="200" y="30" width="800" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Developer / Team" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="100" y="180" width="60" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="GitHub Repo" style="shape=aws4.resourceIcon;resIcon=AWS::CodeCommit;fillColor=#FF9900;strokeColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="340" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="GitHub Actions&#xa;(OIDC)" style="shape=aws4.resourceIcon;resIcon=AWS::CodePipeline;fillColor=#FF9900;strokeColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="480" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Control Tower&#xa;Account Factory" style="shape=aws4.resourceIcon;resIcon=AWS::ControlTower;fillColor=#8C4FFF;strokeColor=none;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="320" y="340" width="140" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="AWS Organizations&#xa;+ SCPs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5A6E8;strokeColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="320" y="480" width="140" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="New AWS Account&#xa;(Dev/Staging/Prod)" style="shape=aws4.resourceIcon;resIcon=AWS::Account;fillColor=#69D3A0;strokeColor=none;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="560" y="340" width="140" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="GuardDuty, Security Hub,&#xa;Config, CloudTrail Org,&#xa;Mandatory Tags" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#A8DDB5;strokeColor=none;fontSize=12;" vertex="1" parent="1">
+                    <mxGeometry x="560" y="480" width="140" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="IAM Identity Center&#xa;(SSO + MFA)" style="shape=aws4.resourceIcon;resIcon=AWS::IAM;fillColor=#D86613;strokeColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="800" y="400" width="140" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="PR + Merge" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;" vertex="1" parent="1">
+                    <mxGeometry x="220" y="420" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="OIDC (no keys)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;" vertex="1" parent="1">
+                    <mxGeometry x="220" y="520" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="SSO + MFA only" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;" vertex="1" parent="1">
+                    <mxGeometry x="710" y="440" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1"/>
+                <mxCell id="15" value="" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1"/>
+                <mxCell id="16" value="" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1"/>
+                <mxCell id="17" value="" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1"/>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
