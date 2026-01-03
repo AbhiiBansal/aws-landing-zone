@@ -1,4 +1,4 @@
-name: "Terraform Plan"
+name: "Terraform Pipeline"
 
 on:
   push:
@@ -7,18 +7,17 @@ on:
     branches: [ "main" ]
 
 permissions:
-  id-token: write   # Required for requesting the OIDC JWT
-  contents: read    # Required for actions/checkout
+  id-token: write
+  contents: read
 
 env:
   AWS_REGION: "ap-south-1"
-  # The Role ARN created in Phase 0 (Management Account)
   AWS_ROLE_ARN: "arn:aws:iam::311472845767:role/GitHubActionsRole"
   TF_WORKING_DIR: "./01-Enterprise-Landing-Zone-2.0"
 
 jobs:
-  terraform-plan:
-    name: "Plan"
+  terraform:
+    name: "Terraform Plan & Apply"
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -31,19 +30,19 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: "1.10.0" 
 
       - name: Terraform Init
         run: terraform init
 
-      - name: Terraform Validate
-        run: terraform validate
-
       - name: Terraform Plan
         run: terraform plan -input=false
+
+      - name: Terraform Apply
+        # SRE Rule: Only apply on the main branch, never on PRs
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false
