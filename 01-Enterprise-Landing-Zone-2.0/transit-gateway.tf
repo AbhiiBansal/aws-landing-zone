@@ -11,19 +11,21 @@ module "transit_gateway" {
   # The "ID Card" of the router (Standard Private ASN)
   amazon_side_asn = 64512
 
-  # Enable Auto-Accept to make our lives easier in this project
-  # (In a strict bank, this might be false, but for us, true is fine)
+  # Enable Auto-Accept so we don't have to manually click "Yes"
   enable_auto_accept_shared_attachments = true
 
-  # Enable Multi-Account Sharing (Crucial for Phase 4)
-  enable_ram_resource_share = true
-  ram_resource_share_name   = "enterprise-tgw-share"
+  # --- FIX START ---
+  # These arguments were renamed/moved in newer module versions.
+  # We use 'share_tgw' to enable RAM sharing now.
+  share_tgw                 = true
+  ram_name                  = "enterprise-tgw-share"
+  # --- FIX END ---
 
-  # Attach the Shared Services VPC (Phase 2) to this Highway immediately
+  # Connect the Shared Services VPC to this Highway
   vpc_attachments = {
     shared_services = {
       vpc_id       = module.vpc.vpc_id
-      subnet_ids   = module.vpc.private_subnets # We connect the Private Subnets to the Highway
+      subnet_ids   = module.vpc.private_subnets
       dns_support  = true
       ipv6_support = false
     }
