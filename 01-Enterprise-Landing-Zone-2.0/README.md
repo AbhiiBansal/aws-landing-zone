@@ -20,27 +20,27 @@ This project implements a scalable **Hub-and-Spoke network architecture** on AWS
 
 ```mermaid
 graph TD
-    subgraph AWS Cloud
-        subgraph Shared Services Account [Hub]
-            HubVPC[Hub VPC (10.0.0.0/16)]
+    subgraph AWS_Cloud ["AWS Cloud"]
+        subgraph Shared_Hub ["Shared Services Account (Hub)"]
+            HubVPC["Hub VPC (10.0.0.0/16)"]
             TGW[Transit Gateway]
         end
         
-        subgraph Dev Account [Spoke 1]
-            DevVPC[Dev VPC (10.1.0.0/16)]
+        subgraph Dev_Account ["Dev Account (Spoke 1)"]
+            DevVPC["Dev VPC (10.1.0.0/16)"]
             DevVM[EC2: dev-tester]
         end
         
-        subgraph Prod Account [Spoke 2]
-            ProdVPC[Prod VPC (10.2.0.0/16)]
+        subgraph Prod_Account ["Prod Account (Spoke 2)"]
+            ProdVPC["Prod VPC (10.2.0.0/16)"]
         end
         
         DevVPC -->|Attachment| TGW
         ProdVPC -->|Attachment| TGW
         HubVPC -->|Attachment| TGW
         
-        TGW -->|Route: 10.0.0.0/8| DevVPC
-        TGW -->|Route: 10.0.0.0/8| ProdVPC
+        TGW -->|"Route: 10.0.0.0/8"| DevVPC
+        TGW -->|"Route: 10.0.0.0/8"| ProdVPC
     end
 
     Traffic Flow: Dev ↔️ Transit Gateway ↔️ Prod
