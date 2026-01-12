@@ -42,7 +42,7 @@ graph TD
         TGW -->|"Route: 10.0.0.0/8"| DevVPC
         TGW -->|"Route: 10.0.0.0/8"| ProdVPC
     end
-
+```
     Traffic Flow: Dev ↔️ Transit Gateway ↔️ Prod
 
 Security: Strict isolation between accounts; shared resources controlled via AWS RAM.
