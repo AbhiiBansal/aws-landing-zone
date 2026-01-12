@@ -1,61 +1,32 @@
+# providers.tf
+
+# 1. The Hub Account (Shared Services) - Default Provider
 provider "aws" {
-  region = "ap-south-1"
-
-  # -----------------------------------------------------------
-  # DEFAULT PROVIDER: Shared Services Account (The Hub)
-  # -----------------------------------------------------------
+  region = var.aws_region
+  
+  # CRITICAL: Force Terraform to target the Shared-Services account
+  # even if you are logged into Management.
   assume_role {
-    role_arn = "arn:aws:iam::375896310432:role/AWSControlTowerExecution"
-  }
-
-  default_tags {
-    tags = {
-      Project     = "Enterprise-Landing-Zone"
-      Environment = "Shared-Services"
-      ManagedBy   = "Terraform"
-      Owner       = "AbhiiBansal"
-    }
+    role_arn = "arn:aws:iam::${var.hub_account_id}:role/AWSControlTowerExecution"
   }
 }
 
-# -----------------------------------------------------------
-# ALIAS PROVIDER: Dev Account (The Spoke)
-# -----------------------------------------------------------
+# 2. The Dev Account (Spoke 1)
 provider "aws" {
   alias  = "dev"
-  region = "ap-south-1"
+  region = var.aws_region
 
   assume_role {
-    role_arn = "arn:aws:iam::685386557511:role/AWSControlTowerExecution"
-  }
-
-  default_tags {
-    tags = {
-      Project     = "Enterprise-Landing-Zone"
-      Environment = "Development"
-      ManagedBy   = "Terraform"
-      Owner       = "AbhiiBansal"
-    }
+    role_arn = "arn:aws:iam::${var.dev_account_id}:role/AWSControlTowerExecution"
   }
 }
 
-# -----------------------------------------------------------
-# ALIAS PROVIDER: Prod Account (The Spoke)
-# -----------------------------------------------------------
+# 3. The Prod Account (Spoke 2)
 provider "aws" {
   alias  = "prod"
-  region = "ap-south-1"
+  region = var.aws_region
 
   assume_role {
-    role_arn = "arn:aws:iam::567554448213:role/AWSControlTowerExecution"
-  }
-
-  default_tags {
-    tags = {
-      Project     = "Enterprise-Landing-Zone"
-      Environment = "Production"
-      ManagedBy   = "Terraform"
-      Owner       = "AbhiiBansal"
-    }
+    role_arn = "arn:aws:iam::${var.prod_account_id}:role/AWSControlTowerExecution"
   }
 }
