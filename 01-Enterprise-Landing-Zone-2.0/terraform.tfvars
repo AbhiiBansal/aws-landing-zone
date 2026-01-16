@@ -15,3 +15,7 @@ dev_account_id  = "685386557511"
 
 # Spoke 2 lives in "Prod"
 prod_account_id = "567554448213"
+# -----------------------------------------------------------------------------
+# RESOURCE SHARING (Transit Gateway)
+# -----------------------------------------------------------------------------
+workloads_ou_arn = "arn:aws:organizations::311472845767:ou/o-lfpq3a1r1l/ou-wkdq-d1fq0ffk"
