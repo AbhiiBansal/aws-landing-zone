@@ -18,3 +18,7 @@ variable "prod_account_id" {
   description = "AWS Account ID for Production (Spoke 2)"
   type        = string
 }
+variable "workloads_ou_arn" {
+  description = "The ARN of the Workloads OU to share the Transit Gateway with"
+  type        = string
+}

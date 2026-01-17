@@ -49,5 +49,5 @@ resource "aws_ram_principal_association" "workloads_ou" {
   resource_share_arn = module.transit_gateway.ram_resource_share_id
 
   # The Recipient: The ARN of your Workloads OU
-  principal = "arn:aws:organizations::311472845767:ou/o-lfpq3a1r1l/ou-wkdq-d1fq0ffk"
+  principal = var.workloads_ou_arn
 }
