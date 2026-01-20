@@ -23,4 +23,4 @@ output "deployed_account_id" {
 
 output "deployed_region" {
   value = data.aws_region.current.id
-}
+}# Reliability Trigger
