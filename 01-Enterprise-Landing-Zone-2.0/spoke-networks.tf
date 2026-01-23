@@ -1,17 +1,12 @@
 # -----------------------------------------------------------------------
-# PHASE 4: SPOKE NETWORKS
+# SPOKE NETWORKS (Zero Cost Version)
 # -----------------------------------------------------------------------
-# This file creates the VPCs in the Dev and Prod accounts.
-# Notice how we use 'providers = { aws = aws.alias }' to switch accounts.
 
 # 1. DEVELOPMENT VPC
 module "dev_vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 5.0"
-
-  providers = {
-    aws = aws.dev
-  }
+  source    = "terraform-aws-modules/vpc/aws"
+  version   = "~> 5.0"
+  providers = { aws = aws.dev }
 
   name = "dev-vpc"
   cidr = "10.1.0.0/16"
@@ -20,9 +15,13 @@ module "dev_vpc" {
   private_subnets = ["10.1.1.0/24", "10.1.2.0/24"]
   public_subnets  = ["10.1.101.0/24", "10.1.102.0/24"]
 
-  # Cost Saving for Dev: Single NAT Gateway is enough
-  enable_nat_gateway = true
-  single_nat_gateway = true
+  # --- ZERO COST ---
+  enable_nat_gateway = false
+  single_nat_gateway = false
+  # -----------------
+  
+  # Allow Public IPs for free internet access in Dev
+  map_public_ip_on_launch = true
 
   tags = {
     Environment = "Development"
@@ -32,12 +31,9 @@ module "dev_vpc" {
 
 # 2. PRODUCTION VPC
 module "prod_vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 5.0"
-
-  providers = {
-    aws = aws.prod
-  }
+  source    = "terraform-aws-modules/vpc/aws"
+  version   = "~> 5.0"
+  providers = { aws = aws.prod }
 
   name = "prod-vpc"
   cidr = "10.2.0.0/16"
@@ -46,13 +42,38 @@ module "prod_vpc" {
   private_subnets = ["10.2.1.0/24", "10.2.2.0/24"]
   public_subnets  = ["10.2.101.0/24", "10.2.102.0/24"]
 
-  # High Availability for Prod: One NAT Gateway per AZ
-  enable_nat_gateway = true
-  single_nat_gateway = false 
-  one_nat_gateway_per_az = true
+  # --- ZERO COST ---
+  enable_nat_gateway = false
+  single_nat_gateway = false
+  # -----------------
+  
+  map_public_ip_on_launch = true
 
   tags = {
     Environment = "Production"
+    Role        = "Spoke-VPC"
+  }
+}
+# 3. STAGING VPC
+module "staging_vpc" {
+  source    = "terraform-aws-modules/vpc/aws"
+  version   = "~> 5.0"
+  providers = { aws = aws.staging }
+
+  name = "staging-vpc"
+  cidr = "10.3.0.0/16" # Next available CIDR block
+
+  azs             = ["ap-south-1a", "ap-south-1b"]
+  private_subnets = ["10.3.1.0/24", "10.3.2.0/24"]
+  public_subnets  = ["10.3.101.0/24", "10.3.102.0/24"]
+
+  # Zero Cost Config
+  enable_nat_gateway = false
+  single_nat_gateway = false
+  map_public_ip_on_launch = true
+
+  tags = {
+    Environment = "Staging"
     Role        = "Spoke-VPC"
   }
 }

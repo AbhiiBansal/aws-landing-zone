@@ -22,3 +22,11 @@ variable "workloads_ou_arn" {
   description = "The ARN of the Workloads OU to share the Transit Gateway with"
   type        = string
 }
+variable "staging_account_id" {
+  description = "AWS Account ID for Staging (Spoke 3)"
+  type        = string
+}
+variable "budget_alert_email" {
+  description = "Email address for billing alerts"
+  type        = string
+}
