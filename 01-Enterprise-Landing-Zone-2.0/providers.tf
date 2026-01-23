@@ -30,3 +30,11 @@ provider "aws" {
     role_arn = "arn:aws:iam::${var.prod_account_id}:role/AWSControlTowerExecution"
   }
 }
+# 4. The Staging Account (Spoke 3)
+provider "aws" {
+  alias  = "staging"
+  region = var.aws_region
+  assume_role {
+    role_arn = "arn:aws:iam::${var.staging_account_id}:role/AWSControlTowerExecution"
+  }
+}
